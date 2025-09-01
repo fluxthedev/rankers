@@ -46,64 +46,33 @@ console.log(result);
 */
 ```
 
-## API
 
+# API Reference
+
+This document describes the available functions for Reddit-style post ranking.
+
+## `scoreHot(upvotes, downvotes, createdAt)`
+
+Compute a Reddit-style **hot score**.  
+This blends a post’s vote balance with recency to favor fresh, popular content.
+
+### Parameters
+- `upvotes` (number) — non-negative integer, count of upvotes  
+- `downvotes` (number) — non-negative integer, count of downvotes  
+- `createdAt` (number) — Unix timestamp in **seconds (UTC)**
+
+### Returns
+- (number) — hot score (higher = ranks earlier)
+
+### Example
+```js
+import { scoreHot } from './rankers.js';
+
+const now = Math.floor(Date.now() / 1000);
+const hot = scoreHot(350, 40, now - 3600);
+
+console.log(hot); // 5.8371042
 ```
-scoreHot(upvotes, downvotes, createdAt)
-```
-Returns a Reddit-style hot score (number).
-
-```
-upvotes (number) — non-negative integer
-```
-```
-downvotes (number) — non-negative integer
-```
-```
-createdAt (number) — post creation time in Unix seconds (UTC)
-```
-```
-scoreBest(upvotes, downvotes, [z])
-```
-
-Returns a Wilson lower bound score (0–1).
-
-`upvotes (number)`
-
-`downvotes (number)`
-
-```
-z (number, optional, default 1.281551565545) — z-score for confidence interval.
-```
-
-rankPost({ upvotes, downvotes, createdAt })
-
-Convenience wrapper returning an object with:
-
-score — raw upvotes minus downvotes
-
-hot — hot score
-
-best — Wilson lower bound score
-
-
-Examples
-
-Sorting a list of posts by "hot":
-
-
-posts.sort((a, b) => scoreHot(b.upvotes, b.downvotes, b.createdAt) -
-                     scoreHot(a.upvotes, a.downvotes, a.createdAt));
-
-Sorting by "best":
-
-
-posts.sort((a, b) => scoreBest(b.upvotes, b.downvotes) -
-                     scoreBest(a.up
-votes
-, a.downvotes));
-
 License
 
 MIT
-
