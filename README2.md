@@ -51,7 +51,7 @@ console.log(result);
 
 This document describes the available functions for Reddit-style post ranking.
 
-## `scoreHot(upvotes, downvotes, createdAt)`
+`scoreHot(upvotes, downvotes, createdAt)`
 
 Compute a Reddit-style **hot score**.  
 This blends a post’s vote balance with recency to favor fresh, popular content.
